@@ -73,7 +73,7 @@ cvar_t	vid_screen_width = {"vid_screen_width", "640", true};
 cvar_t	vid_screen_height = {"vid_screen_height", "480", true};
 cvar_t	vid_disp_mode = {"vid_disp_mode", "0", true};
 
-
+// Ian micheal Pvr dma cache change faster 
 int dm;
 unsigned short hline[BASEWIDTH];
 void dc_txr_dma_cpy(void *dest, void *src, int n)
