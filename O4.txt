@@ -1,0 +1,23 @@
+
+This is what is enabled using -04
+
+GNU CPP version 3.0.4 (cpplib) (Hitachi SH)
+GNU C version 3.0.4 (sh-elf)
+        compiled by GNU C version 3.2 20020927 (prerelease).
+options passed:  -lang-c -v -I/usr/local/dc/kos-1.1.9/include
+ -I/usr/local/dc/kos-1.1.9/libc/include
+ -I/usr/local/dc/kos-1.1.9/kernel/arch/dreamcast/include -D__GNUC__=3
+ -D__GNUC_MINOR__=0 -D__GNUC_PATCHLEVEL__=4 -D__sh__ -D__ELF__ -D__sh__
+ -D__ELF__ -Acpu=sh -Amachine=sh -D__OPTIMIZE__ -D__STDC_HOSTED__=1
+ -D__LITTLE_ENDIAN__ -D__SH4_SINGLE_ONLY__ -DSDL -DLSB_FIRST -DALIGN_LONG
+ -DINLINE -DDC -D_arch_dreamcast -ml -m4-single-only -O4
+options enabled:  -fdefer-pop -foptimize-sibling-calls -fcse-follow-jumps
+ -fcse-skip-blocks -fexpensive-optimizations -fthread-jumps
+ -fstrength-reduce -fpeephole -fforce-mem -ffunction-cse -finline-functions
+ -finline -fkeep-static-consts -fcaller-saves -freg-struct-return
+ -fdelayed-branch -fgcse -frerun-cse-after-loop -frerun-loop-opt
+ -fdelete-null-pointer-checks -fschedule-insns2 -fsched-interblock
+ -fsched-spec -fbranch-count-reg -freorder-blocks -frename-registers
+ -fcommon -fgnu-linker -fregmove -foptimize-register-move -fargument-alias
+ -fstrict-aliasing -fident -fpeephole2 -fguess-branch-probability
+ -fmath-errno -m1 -m2 -m3 -m3e -m4-single-only -m4-nofpu -ml
