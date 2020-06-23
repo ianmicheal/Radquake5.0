@@ -20,4 +20,5 @@ Custom Theme for the DreamCast HomeScreen
 GDEMU users can use up to 100 Mods with the MDS/MDF mod collection
 Quick Mod Switching no reboot
 Ported by Ian micheal 2002
-Credits  Speud blackaura 
+
+Credits  Speud blackaura Manoel Kasimier
