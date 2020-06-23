@@ -76,7 +76,21 @@ cvar_t	vid_disp_mode = {"vid_disp_mode", "0", true};
 
 int dm;
 unsigned short hline[BASEWIDTH];
+void dc_txr_dma_cpy(void *dest, void *src, int n)
+{
+	long i = n/32;
+	char	*ptr=dest;
 
+
+	do 
+	{
+		asm("ocbp @%0" : : "r" (ptr));
+		ptr += 32;
+	} while (-- i);
+
+		pvr_txr_load_dma(dest, src, n,1);
+
+}
 
 void VID_PvrInit (void) {
 	pvr_init_defaults();
@@ -115,7 +129,7 @@ void VID_DrawScreen (void) {
 	pvr_prim(&vert, sizeof(vert));
 	
      dcache_flush_range((int)vram_buf, 512*256*2);
-	pvr_txr_load_dma(vram_buf[txr_cur], vram_tex[txr_cur], 512*256*2, 1);
+	dc_txr_dma_cpy(vram_buf[txr_cur], vram_tex[txr_cur], 512*256*2);
 }
 
 
