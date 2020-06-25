@@ -15,10 +15,8 @@ VMU Quick Saving/Loading, Auto Config Saving and VMU Icon Saving
 VMU Savestate/Loading
 Live VMU Doom Guy Health Display customize-able 15 animation
 On the Fly Body View - 3rd person quake and mods
-Full CD-R Support with Disc swap for most Original, Nonofficial and Unofficial Expansions
 Custom Theme for the DreamCast HomeScreen
 GDEMU users can use up to 100 Mods with the MDS/MDF mod collection
 Quick Mod Switching no reboot
-Ported by Ian micheal 2002
-
-Credits  Speud blackaura Manoel Kasimier
+Ported by Ian micheal 2002 2018 2019 2020 Improvements and optimizing 
+Credits  Speud blackaura Manoel Kasimier 2003/2004 changes and features file replacements
