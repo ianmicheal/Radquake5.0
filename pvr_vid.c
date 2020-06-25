@@ -236,59 +236,117 @@ void VID_DrawRect(float x1, float y1, float x2, float y2, float z, float a, floa
 
 
 void dmSelector (void) {
-   //check for holding start button
-cont_cond_t regionswitch1; 
-cont_get_cond(maple_first_controller(), &regionswitch1);
-if(!(regionswitch1.buttons & CONT_START)){
-   /* Set System Region */ 
-    cont_cond_t regionswitch; 
-   int regionloopend=1; 
-   
-   
-  // vid_clear(0,255,0);
-   bfont_draw_str(vram_s+(10)*640+(10), 640,480, "Region Select"); 
-   bfont_draw_str(vram_s+(64)*640+(10), 640,480, "Y for 60hz");   
-   bfont_draw_str(vram_s+(88)*640+(10), 640,480, "B for 50hz");
+	int curs_y=0, done=0, pressed=0;
+	maple_device_t *dev;
+	cont_state_t *stat;
+	uint32 func;
+	pvr_poly_cxt_t cxt;
 
-   bfont_draw_str(vram_s+(130)*640+(10), 640,480, "Current Region:"); 
-   bfont_draw_str(vram_s+(130)*640+(190), 640,480, "USA"); 
-   bfont_draw_str(vram_s+(200)*640+(10),640,480,"Hit A to continue..."); 
+	int x, y;
 
-   while(regionloopend){ 
-     
-       
-  cont_get_cond(maple_first_controller(), &regionswitch); 
-      if(!(regionswitch.buttons & CONT_X))   { 
-	  }
-	  if(!(regionswitch.buttons & CONT_Y))   { 
-		  vid_set_mode(DM_640x480, PM_RGB565);
-		  bfont_draw_str(vram_s+(130)*640+(190), 640,480, "Hit A to continue...    ");
-		  bfont_draw_str(vram_s+(130)*640+(190), 640,480, "60hz.."); 
-	  }
-	  if(!(regionswitch.buttons & CONT_B))   { 
-		  vid_set_mode(DM_640x480_PAL_IL, PM_RGB565);
-		  bfont_draw_str(vram_s+(130)*640+(190), 640,480, "Hit A to continue...     ");
-		  bfont_draw_str(vram_s+(130)*640+(190), 640,480, "50hz.."); 
-	  }
-       
-if(!(regionswitch.buttons & CONT_A))   { 
-   regionloopend=0; 
-} 
-   } 
-//vid_empty();  
-}
- 
+	dm = DM_640x480;
+
+// preparing background
+	bg_tex = pvr_mem_malloc(256*256*2); 
+	png_to_texture("/cd/main.png", bg_tex, PNG_NO_ALPHA); 
+
+// reading DC's region from flashrom
+	if (flashrom_get_region() == 3) {	// PAL dreamcast => default to 50Hz
+		vid_set_mode(DM_640x480_PAL_IL, PM_RGB565);
+		curs_y = 0;
+	} else {				// non PAL dreamcast => default to 60Hz
+		vid_set_mode(DM_640x480, PM_RGB565);
+		curs_y = 1;
 	}
 
+// preparing cursor
+	pvr_poly_cxt_col(&cxt, PVR_LIST_TR_POLY);
+	pvr_poly_compile(&hdr_rect, &cxt);
+
+
+// preparing strings
+	str_tex = pvr_mem_malloc(256*256*2); 
+
+	if (str_tex == NULL) {
+		printf("*** dmSelector: failed to allocate enough memory for str_tex\n");
+		arch_exit();
+	}
+
+	str_buf = (unsigned short *)malloc(256*256);
+
+	if (str_buf == NULL) {
+		printf("*** dmSelector: failed to allocate enough memory for str_buf\n");
+		arch_exit();
+	}
+
+	for (y=0; y<256; y++)
+		for (x=0; x<256; x++)
+			str_buf[y*256+x] = 0x0000;
+
+	bfont_draw_str(str_buf+ 40*256+50, 256, 1, "Display mode:");
+	bfont_draw_str(str_buf+ 88*256+98, 256, 1, "50 Hz");
+	bfont_draw_str(str_buf+123*256+98, 256, 1, "60 Hz");
+
+	pvr_txr_load_ex(str_buf, str_tex, 256, 256, PVR_TXRLOAD_16BPP);
+
+	while (!done) {			// display mode selector start
+
+		dev = maple_enum_dev(0, 0);
+		stat = maple_dev_status(dev);
+		func = maple_device_func(0, 0);
+
+		if ((func & MAPLE_FUNC_CONTROLLER) && !pressed &&
+	(((uint16)stat->buttons & CONT_DPAD_UP) || ((uint16)stat->buttons & CONT_DPAD_DOWN))) {
+			curs_y = !curs_y;
+			pressed = 1;
+		}
+
+		if ((func & MAPLE_FUNC_CONTROLLER) && pressed &&
+	!(((uint16)stat->buttons & CONT_DPAD_UP) || ((uint16)stat->buttons & CONT_DPAD_DOWN))) {
+			pressed = 0;
+		}
+
+		if ((func & MAPLE_FUNC_CONTROLLER) &&
+	(((uint16)stat->buttons & CONT_A) || ((uint16)stat->buttons & CONT_START)))
+			done=1;
+
+		pvr_wait_ready();
+		pvr_scene_begin();
+
+		pvr_list_begin(PVR_LIST_OP_POLY);
+// drawing background
+		VID_DrawBackground();
+		pvr_list_finish();
+
+		pvr_list_begin(PVR_LIST_TR_POLY);
+// drawing frame
+		VID_DrawRect(220, 140, 420, 290, 1, 0.7, 0.2, 0, 0);
+// drawing strings
+		VID_DrawStr();
+// drawing cursor
+		VID_DrawRect(285, 195+curs_y*34, 285+70, 195+(curs_y+1)*34, 3, 0.5, 0.5, 0.5, 0);
+		pvr_list_finish();
+
+		pvr_scene_finish();
+	}
+
+// changing display mode
+	if (curs_y) {
+		vid_set_mode(DM_640x480, PM_RGB565);
+		dm = DM_640x480;
+	} else {
+		vid_set_mode(DM_640x480_PAL_IL, PM_RGB565);
+		dm = DM_640x480_PAL_IL;
+	}
 
 // freeing strings
-//	pvr_mem_free(str_tex);
-//	free(str_buf);
+	pvr_mem_free(str_tex);
+	free(str_buf);
 
 // display selector end
 
-//	printf("dmSelector: done\n");
-
+	printf("dmSelector: done\n");
+}
 
 
 void waitForCD (void) {
