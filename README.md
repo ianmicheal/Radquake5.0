@@ -20,3 +20,4 @@ GDEMU users can use up to 100 Mods with the MDS/MDF mod collection
 Quick Mod Switching no reboot
 Ported by Ian micheal 2002 2018 2019 2020 Improvements and optimizing 
 Credits  Speud blackaura Manoel Kasimier 2003/2004 changes and features file replacements
+2020 quake 1 with all dreamcast features 320x240 software rending using pvr dma textures Hybrid
