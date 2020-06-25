@@ -974,7 +974,7 @@ void Host_Init (quakeparms_t *parms)
 
 /* speud - display mode selector and disc checking begin */
 	VID_PvrInit();
-//	dmSelector();
+	dmSelector();
 //	waitForCD();
 /* speud - display mode selector and disc checking end */
 

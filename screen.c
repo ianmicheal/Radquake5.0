@@ -743,10 +743,11 @@ void SCR_BeginLoadingPlaque (void)
 	Sbar_Changed ();
 	SCR_UpdateScreen ();
 	scr_drawloading = false;
-
+SCR_UpdateScreen ();
 	scr_disabled_for_loading = true;
 	scr_disabled_time = realtime;
 	scr_fullupdate = 0;
+	SCR_UpdateScreen ();
 }
 
 /*
@@ -884,7 +885,7 @@ void SCR_UpdateScreen (void)
 
 	if (scr_disabled_for_loading)
 	{
-		if (realtime - scr_disabled_time > 60)
+		if (realtime - scr_disabled_time > 5*1000) //SDL_Delay(5*1000);
 		{
 			scr_disabled_for_loading = false;
 			Con_Printf ("load failed.\n");
