@@ -1,8 +1,11 @@
 # Radquake5.0
 Optimized quake 1 source port for dreamcast with all features Credits Speud blackaura Manoel Kasimier
 320X240
+
 44k Stereo Sound
+
 44k CDDA on CD-R & Gdemu most times
+
 #Only When Possible, Remember now Quake would read from the PC HardDrive and the CD for music
 Full CDDA on NullDC/FlyCast Emulator music works perfect all the time..
 50hz / 60hz Video Modes on the fly HDMI to SCART
@@ -19,5 +22,6 @@ Custom Theme for the DreamCast HomeScreen
 GDEMU users can use up to 100 Mods with the MDS/MDF mod collection
 Quick Mod Switching no reboot
 Ported by Ian micheal 2002 2018 2019 2020 Improvements and optimizing 
+
 Credits  Speud blackaura Manoel Kasimier 2003/2004 changes and features file replacements
 2020 quake 1 with all dreamcast features 320x240 software rending using pvr dma textures Hybrid
