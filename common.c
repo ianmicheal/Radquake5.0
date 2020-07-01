@@ -1040,36 +1040,11 @@ being registered.
 */
 void COM_CheckRegistered (void)
 {
-	int             h;
 
-	COM_OpenFile("gfx/pop.lmp", &h);
-	static_registered = 0;
-
-	if (h == -1)
-	{
-		#if WINDED
-			Sys_Error ("This dedicated server requires a full registered copy of Quake");
-		#endif
-
-		Con_Printf ("Playing shareware version.\n");
-		if (com_modified)
-			Sys_Error ("You must have the registered version to use modified games");
-		return;
-	}
-
-	// BlackAura (29-12-2002) - Remove POP data check
-	// Sys_FileRead (h, check, sizeof(check));
-
-	COM_CloseFile (h);
-	
-	// BlackAura (29-12-2002) - Remove POP data check
-	// for (i=0 ; i<128 ; i++)
-	//	if (pop[i] != (unsigned short)BigShort (check[i]))
-	//		Sys_Error ("Corrupted data file.");
-	
+//Ian micheal pop check remove more simple works fine have no idea seeing other ports why you do what they did..
 	Cvar_Set ("cmdline", com_cmdline);
 	Cvar_Set ("registered", "1");
-	static_registered = 1;
+//	static_registered = 1;
 	Con_Printf ("Playing registered version.\n");
 }
 
