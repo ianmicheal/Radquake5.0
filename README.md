@@ -1,6 +1,6 @@
 # Radquake5.0
-Optimized quake 1 source port for dreamcast with all features Credits Speud blackaura Manoel Kasimier 320X240
-
+Optimized quake 1 source port for dreamcast with all features Credits Ian micheal Bero Speud blackaura  320X240
+Manoel Kasimier Src changes for keys and adding features No porting ..
 44k Stereo Sound
 
 44k CDDA on CD-R & Gdemu most times
